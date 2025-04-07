@@ -1,22 +1,14 @@
-mod matrix;
-
 extern crate sdl2;
 
+use nalgebra::matrix;
 use sdl2::pixels::Color;
 use sdl2::event::Event;
 use sdl2::keyboard::Keycode;
 
 use std::time::Duration;
-use crate::matrix::{matrix_multiply, Matrix};
 
 pub fn main() {
     //test
-    let a: Matrix = Matrix::new(2, 2);
-    a.display();
-    let b: Matrix = Matrix::new(2, 2);
-
-    let c: Matrix = matrix_multiply(&a, &b);
-    c.display();
 
     //test end
 
