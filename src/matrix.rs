@@ -14,8 +14,4 @@ impl<T> Matrix<T> {
     pub fn append(&mut self, matrix: *const [T]) {
         self.matrices.push(matrix);
     }
-
-    pub fn multiply(matrix1: usize, matrix2: usize) {
-
-    }
 }
