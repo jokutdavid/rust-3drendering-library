@@ -9,6 +9,17 @@ use std::time::Duration;
 
 pub fn main() {
     //test
+    let m = matrix![
+        1, 2;
+        3, 4;
+    ];
+    let n = matrix![
+        1, 2;
+        3, 4;
+    ];
+    let p = m * n;
+
+    println!("{}", p); // prints multiplied matrices
 
     //test end
 
