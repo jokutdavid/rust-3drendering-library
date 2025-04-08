@@ -73,4 +73,10 @@ impl Framebuffer {
         self.data[x + y * self.width] = value;
     }
 
+    pub fn clear(&mut self, color: u32) {
+        for i in 0..self.data.len() {
+            self.data[i] = color;
+        }
+    }
+
 }
