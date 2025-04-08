@@ -40,6 +40,11 @@ impl Window {
             self.framebuffer.width,
             self.framebuffer.height,
         ).expect("failed to update window");
+
+        let (width, height) = self.window.get_size();
+        if width != self.framebuffer.width || height != self.framebuffer.height {
+            self.framebuffer = Framebuffer::new(width, height);
+        }
     }
 
     pub fn framebuffer(&mut self) -> &mut Framebuffer {
