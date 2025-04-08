@@ -41,11 +41,14 @@ fn inside_triangle(a: &Vec2, b: &Vec2, c: &Vec2, p: &Vec2) -> bool {
 }
 
 fn draw_triangle(framebuffer: &mut Framebuffer, a: &Vec2, b: &Vec2, c: &Vec2, color: u32) {
-    for x in 0..framebuffer.width() {
-        for y in 0..framebuffer.height() {
+    let width = framebuffer.width();
+    let height = framebuffer.height();
+
+    for x in 0..width {
+        for y in 0..height {
             let p = Vec2::new(
-                x as f32 / framebuffer.width() as f32,
-                y as f32 / framebuffer.height() as f32);
+                x as f32 / width as f32,
+                y as f32 / height as f32);
 
             if inside_triangle(a, b, c, &p) {
                 framebuffer.set_pixel(x, y, color);
