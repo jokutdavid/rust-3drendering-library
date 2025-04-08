@@ -5,4 +5,4 @@ edition = "2024"
 
 [dependencies]
 nalgebra = "0.33.2"
-sdl2 = "0.37.0"
+minifb = "0.28.0"

@@ -1,57 +1,22 @@
-extern crate sdl2;
+mod window;
+use window::Window;
 
-use nalgebra::matrix;
-use sdl2::pixels::Color;
-use sdl2::event::Event;
-use sdl2::keyboard::Keycode;
-
-use std::time::Duration;
+fn from_u8_rgb(r: u8, g:u8, b:u8) -> u32 {
+    let (r, g, b) = (r as u32, g as u32, b as u32);
+    (r << 16) | (g << 8) | b
+}
 
 pub fn main() {
-    //test
-    let m = matrix![
-        1, 2;
-        3, 4;
-    ];
-    let n = matrix![
-        1, 2;
-        3, 4;
-    ];
-    let p = m * n;
+    let mut window = Window::new("window", 800, 600);
+    let framebuffer = window.framebuffer();
 
-    println!("{}", p); // prints multiplied matrices
-
-    //test end
-
-    let sdl_context = sdl2::init().unwrap();
-    let video_subsystem = sdl_context.video().unwrap();
-
-    let window = video_subsystem.window("rust-sdl2 demo", 800, 600)
-        .position_centered()
-        .build()
-        .unwrap();
-
-    let mut canvas = window.into_canvas().build().unwrap();
-
-    canvas.set_draw_color(Color::RGB(0, 255, 255));
-    canvas.clear();
-    canvas.present();
-    let mut event_pump = sdl_context.event_pump().unwrap();
-
-    'running: loop {
-
-        canvas.clear();
-        for event in event_pump.poll_iter() {
-            match event {
-                Event::Quit {..} |
-                Event::KeyDown { keycode: Some(Keycode::Escape), .. } => {
-                    break 'running
-                },
-                _ => {}
-            }
+    for x in 0..framebuffer.width() {
+        for y in 0..framebuffer.height() {
+            framebuffer.set_pixel(x, y, from_u8_rgb(217, 217, 217));
         }
+    }
 
-        canvas.present();
-        ::std::thread::sleep(Duration::new(0, 1_000_000_000u32 / 60));
+    while !window.should_close() {
+        window.display();
     }
 }
