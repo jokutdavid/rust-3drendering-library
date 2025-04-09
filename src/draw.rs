@@ -60,6 +60,7 @@ pub fn draw_object_3d(points_3d: &[Vec3], camera: &Camera, framebuffer: &mut Fra
 
         while i < points.len() {
             draw_triangle(framebuffer, &points[i], &points[i + 1], &points[i + 2], from_u8_rgb(255, 0, 0));
+            print!("1: {}, 2: {}, 3: {}", points[i], points[i + 1], points[i + 2]);
             i += 3;
         }
     } else {

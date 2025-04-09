@@ -6,18 +6,22 @@ use crate::camera::Camera;
 fn camera_transform(point: Vec3, camera: &Camera) -> Vec3 {
     let deg = PI / 180.0f32; //Don't want to deal with radians
 
-    let y = point.y - camera.y_position;
     let x = point.x - camera.x_position;
+    let y = point.y - camera.y_position;
     let z = point.z - camera.z_position;
 
     let sin_x = (camera.x_rotation * deg).sin();
     let sin_y = (camera.y_rotation * deg).sin();
     let sin_z = (camera.z_rotation * deg).sin();
 
+    let cos_x = (camera.x_rotation * deg).cos();
+    let cos_y = (camera.y_rotation * deg).cos();
+    let cos_z = (camera.z_rotation * deg).cos();
+
     Vec3::new(
-        (camera.y_position * ((sin_z * y) + (camera.z_position * x))) - sin_y * z,
-        (sin_x             * ((camera.y_position * z) + (sin_y * ((sin_z * y) + (camera.z_position * x))))) + camera.x_position * ((camera.z_position * y) - (sin_z * x)),
-        (camera.x_position * ((camera.y_position * z) + (sin_y * ((sin_z * y) + (camera.z_position * x))))) - sin_x             * ((camera.z_position * y) - (sin_z * x))
+        (cos_y * ((sin_z * y) + (cos_x * x))) - sin_y * z,
+        (sin_x * ((cos_y * z) + (sin_y * ((sin_z * y) + (cos_z * x))))) + cos_x * ((cos_z * y) - (sin_z * x)),
+        (cos_x * ((cos_y * z) + (sin_y * ((sin_z * y) + (cos_z * x))))) - sin_x * ((cos_z * y) - (sin_z * x))
     )
 }
 
