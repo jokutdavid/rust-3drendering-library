@@ -94,8 +94,8 @@ static VIEWPORT: Viewport = Viewport {
 fn main() {
     let mut window = Window::new("window", 800, 600);
 
-    let mut camera = Camera  {
-        x_position: 0.2,
+    let camera = Camera  {
+        x_position: 0.4,
         y_position: 0.1,
         z_position: -0.2,
 
