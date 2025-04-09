@@ -6,12 +6,11 @@ mod draw;
 use glam::*;
 use crate::camera::Camera;
 use crate::window::*;
-use crate::projection::*;
 use crate::draw::*;
 static POINTS_3D: &[Vec3] = &[
     Vec3::new(0.3, 0.3, 0.4),
-    Vec3::new(0.3, 0.5, 0.4),
-    Vec3::new(0.5, 0.7, 0.4),
+    Vec3::new(0.6, 0.3, 0.4),
+    Vec3::new(0.5, 0.4, 0.4),
 ];
 
 fn main() {
@@ -35,6 +34,7 @@ fn main() {
 
         draw_object_3d(POINTS_3D, &camera, framebuffer);
 
+        camera.z_rotation += 0.1;
 
         window.display();
     }
