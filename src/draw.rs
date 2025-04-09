@@ -59,10 +59,8 @@ pub fn draw_object_3d(points_3d: &[Vec3], colors: &[[u8; 3]], viewport: &Viewpor
         let mut i = 0;
         let mut color: usize = 0;
 
-        while i < points.len() {
-            draw_triangle(framebuffer, &points[i], &points[i + 1], &points[i + 2], from_u8_rgb(colors[color][0], colors[color][1], colors[color][2]));
-
-            i += 3;
+        for i in 0..(points.len() / 3) {
+            draw_triangle(framebuffer, &points[i * 3], &points[i * 3 + 1], &points[i * 3+ 2], from_u8_rgb(colors[color][0], colors[color][1], colors[color][2]));
             color += 1;
         }
     }
