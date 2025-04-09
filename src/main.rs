@@ -1,21 +1,16 @@
 mod window;
-use window::Window;
+mod projection;
+mod camera;
 
 use glam::*;
-use crate::window::Framebuffer;
+use crate::camera::Camera;
+use crate::window::*;
+use crate::projection::*;
 
-static POINTS: &[Vec2] = &[
-    Vec2::new(0.3, 0.3),
-    Vec2::new(0.7, 0.3),
-    Vec2::new(0.5, 0.7),
-
-    Vec2::new(0.1, 0.3),
-    Vec2::new(0.5, 0.1),
-    Vec2::new(0.2, 0.6),
-
-    Vec2::new(0.5, 0.7),
-    Vec2::new(0.9, 0.7),
-    Vec2::new(0.5, 0.9),
+static POINTS_3D: &[Vec3] = &[
+    Vec3::new(0.3, 0.3, 0.3),
+    Vec3::new(0.7, 0.3, 0.5),
+    Vec3::new(0.5, 0.7, 0.7),
 ];
 
 fn from_u8_rgb(r: u8, g:u8, b:u8) -> u32 {
@@ -66,15 +61,29 @@ fn draw_triangle(framebuffer: &mut Framebuffer, a: &Vec2, b: &Vec2, c: &Vec2, co
 fn main() {
     let mut window = Window::new("window", 800, 600);
 
+    let camera = Camera  {
+        x_position: 0f32,
+        y_position: 0f32,
+        z_position: 0f32,
+
+        x_rotation: 0f32,
+        y_rotation: 0f32,
+        z_rotation: 0f32
+    };
 
     while !window.should_close() {
         let framebuffer = window.framebuffer();
 
+        let points: &[Vec2] = &[
+            project(POINTS_3D[0], &camera),
+            project(POINTS_3D[1], &camera),
+            project(POINTS_3D[2], &camera),
+        ];
+
         framebuffer.clear(from_u8_rgb(217, 217, 217) / 4);
 
-        draw_triangle(framebuffer, &POINTS[0], &POINTS[1], &POINTS[2], from_u8_rgb(255, 0, 0));
-        draw_triangle(framebuffer, &POINTS[3], &POINTS[4], &POINTS[5], from_u8_rgb(0, 255, 0));
-        draw_triangle(framebuffer, &POINTS[6], &POINTS[7], &POINTS[8], from_u8_rgb(255, 0, 255));
+        draw_triangle(framebuffer, &points[0], &points[1], &points[2], from_u8_rgb(255, 0, 0));
+
 
 
         window.display();
