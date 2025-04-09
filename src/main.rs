@@ -112,8 +112,7 @@ fn main() {
 
         draw_object_3d(POINTS_3D, TRIG_COLOR, &VIEWPORT, &camera, framebuffer);
 
-        camera.x_position += 0.002;
-        camera.y_rotation += 0.1;
+
 
         window.display();
     }

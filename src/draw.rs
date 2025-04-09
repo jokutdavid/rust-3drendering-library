@@ -56,7 +56,6 @@ pub fn draw_object_3d(points_3d: &[Vec3], colors: &[[u8; 3]], viewport: &Viewpor
     }
 
     if points.len() % 3 == 0 { //Make sure that there are groups of three for triangles
-        let mut i = 0;
         let mut color: usize = 0;
 
         for i in 0..(points.len() / 3) {
