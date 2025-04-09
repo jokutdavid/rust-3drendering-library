@@ -9,16 +9,16 @@ use crate::window::*;
 use crate::projection::*;
 use crate::draw::*;
 static POINTS_3D: &[Vec3] = &[
-    Vec3::new(0.3, 0.3, 0.3),
-    Vec3::new(0.3, 0.5, 0.3),
-    Vec3::new(0.5, 0.3, 0.7),
+    Vec3::new(0.3, 0.3, 0.4),
+    Vec3::new(0.3, 0.5, 0.4),
+    Vec3::new(0.5, 0.7, 0.4),
 ];
 
 fn main() {
     let mut window = Window::new("window", 800, 600);
 
     let mut camera = Camera  {
-        x_position: 0.2,
+        x_position: 0.3,
         y_position: 0.2,
         z_position: 0.1,
 
@@ -34,6 +34,7 @@ fn main() {
         framebuffer.clear(from_u8_rgb(217, 217, 217) / 4);
 
         draw_object_3d(POINTS_3D, &camera, framebuffer);
+
 
         window.display();
     }

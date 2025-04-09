@@ -58,9 +58,16 @@ pub fn draw_object_3d(points_3d: &[Vec3], camera: &Camera, framebuffer: &mut Fra
     if points.len() % 3 == 0 { //Make sure that there are groups of three for triangles
         let mut i = 0;
 
+        let test_points: [Vec2; 3] = [
+            Vec2::new(0.3, 0.3),
+            Vec2::new(0.5, 0.3),
+            Vec2::new(0.5, 0.7),
+        ];
+
         while i < points.len() {
             draw_triangle(framebuffer, &points[i], &points[i + 1], &points[i + 2], from_u8_rgb(255, 0, 0));
-            print!("1: {}, 2: {}, 3: {}", points[i], points[i + 1], points[i + 2]);
+
+            print!("1: {}, 2: {}, 3: {}", &points[i], &points[i + 1], &points[i + 2]);
             i += 3;
         }
     } else {
