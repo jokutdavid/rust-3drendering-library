@@ -4,7 +4,7 @@ use crate::camera::Camera;
 
 
 fn camera_transform(point: Vec3, camera: &Camera) -> Vec3 {
-    let deg = 180.0f32 / PI; //Don't want to deal with radians
+    let deg = PI / 180.0f32; //Don't want to deal with radians
 
     let y = point.y - camera.y_position;
     let x = point.x - camera.x_position;

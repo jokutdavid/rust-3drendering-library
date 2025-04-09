@@ -61,15 +61,16 @@ fn draw_triangle(framebuffer: &mut Framebuffer, a: &Vec2, b: &Vec2, c: &Vec2, co
 fn main() {
     let mut window = Window::new("window", 800, 600);
 
-    let camera = Camera  {
-        x_position: 0f32,
-        y_position: 0f32,
-        z_position: 0f32,
+    let mut camera = Camera  {
+        x_position: 0.3f32,
+        y_position: 0.4f32,
+        z_position: 0.2f32,
 
         x_rotation: 0f32,
         y_rotation: 0f32,
         z_rotation: 0f32
     };
+
 
     while !window.should_close() {
         let framebuffer = window.framebuffer();
@@ -80,10 +81,13 @@ fn main() {
             project(POINTS_3D[2], &camera),
         ];
 
+        print!("{}", points[0]);
+
         framebuffer.clear(from_u8_rgb(217, 217, 217) / 4);
 
         draw_triangle(framebuffer, &points[0], &points[1], &points[2], from_u8_rgb(255, 0, 0));
 
+        camera.x_rotation += 1f32;
 
 
         window.display();
