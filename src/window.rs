@@ -4,7 +4,7 @@ pub struct Window {
 }
 
 pub struct Framebuffer {
-    data: Vec<u32>,
+    pub data: Vec<u32>,
     width: usize,
     height: usize,
 }
