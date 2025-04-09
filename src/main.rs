@@ -92,27 +92,30 @@ static VIEWPORT: Viewport = Viewport {
 };
 
 fn main() {
+    let mut frame: u64 = 0;
     let mut window = Window::new("window", 800, 600);
 
-    let camera = Camera  {
-        x_position: 0.4,
-        y_position: 0.1,
+    let mut camera = Camera  {
+        x_position: 0.8f32,
+        y_position: -0.3,
         z_position: -0.2,
 
-        x_rotation: 0.0,
+        x_rotation: -8.0,
         y_rotation: 0.0,
         z_rotation: 0.0
     };
 
+    let mut run = true;
+    while !window.should_close() && run {
+        if frame < 18446744073709551615 { frame += 1; } else {run = false}
 
-    while !window.should_close() {
         let framebuffer = window.framebuffer();
 
         framebuffer.clear(from_u8_rgb(217, 217, 217) / 4);
 
         draw_object_3d(POINTS_3D, TRIG_COLOR, &VIEWPORT, &camera, framebuffer);
 
-
+        camera.y_rotation = 0f32 + ((frame / 50) as f32).sin() * 5f32;
 
         window.display();
     }
