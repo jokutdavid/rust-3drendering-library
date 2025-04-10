@@ -1,4 +1,5 @@
 - [x] Triangle ordering.
+- [ ] Stop seeing behind your head.
 - [ ] Backface culling.
 - [ ] Model transformations.
 - [ ] Load models from .obj.
