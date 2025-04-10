@@ -9,91 +9,85 @@ use crate::camera::*;
 use crate::window::*;
 use crate::draw::*;
 use crate::object::*;
-static POINTS_3D: &[Triangle] = &[
-
-    //Back Face
-    Triangle {
-        Vec3::new(0.4,
-        0.3,
-        0.8),
-        Vec3::new(0.7,
-        0.3,
-        0.8),
-        Vec3::new(0.7,
-        0.6,
-        0.8),
-    },
-
-    Triangle::new(
-        Vec3::new(0.4, 0.3, 0.8),
-        Vec3::new(0.7, 0.6, 0.8),
-        Vec3::new(0.4, 0.6, 0.8),
-    ),
-
-    //Bottom Face
-    Triangle::new(
-        Vec3::new(0.4, 0.6, 0.5),
-        Vec3::new(0.4, 0.6, 0.8),
-        Vec3::new(0.7, 0.6, 0.8),
-    ),
-
-    Triangle::new(
-        Vec3::new(0.7, 0.6, 0.8),
-        Vec3::new(0.7, 0.6, 0.5),
-        Vec3::new(0.4, 0.6, 0.5),
-    ),
-
-    //Right Face
-    Triangle::new(
-        Vec3::new(0.7, 0.3, 0.8),
-        Vec3::new(0.7, 0.6, 0.5),
-        Vec3::new(0.7, 0.6, 0.8),
-    ),
-
-    Triangle::new(
-        Vec3::new(0.7, 0.3, 0.8),
-        Vec3::new(0.7, 0.3, 0.5),
-        Vec3::new(0.7, 0.6, 0.5),
-    ),
-
-    //Left Face
-    Triangle::new(
-        Vec3::new(0.4, 0.6, 0.8),
-        Vec3::new(0.4, 0.3, 0.8),
-        Vec3::new(0.4, 0.6, 0.5),
-    ),
-
-    Triangle::new(
-        Vec3::new(0.4, 0.3, 0.8),
-        Vec3::new(0.4, 0.3, 0.5),
-        Vec3::new(0.4, 0.6, 0.5),
-    ),
-
-    //Front Face
-    Triangle::new(
-        Vec3::new(0.4, 0.3, 0.5),
-        Vec3::new(0.7, 0.3, 0.5),
-        Vec3::new(0.7, 0.6, 0.5),
-    ),
-
-    Triangle::new(
-        Vec3::new(0.4, 0.3, 0.5),
-        Vec3::new(0.7, 0.6, 0.5),
-        Vec3::new(0.4, 0.6, 0.5),
-    ),
-    //Top Face
-    Triangle::new(
-        Vec3::new(0.4, 0.3, 0.5),
-        Vec3::new(0.4, 0.3, 0.8),
-        Vec3::new(0.7, 0.3, 0.8),
-    ),
-
-    Triangle::new(
-        Vec3::new(0.7, 0.3, 0.5),
-        Vec3::new(0.4, 0.3, 0.5),
-        Vec3::new(0.7, 0.3, 0.8),
-    ),
-];
+// static POINTS_3D: &[Triangle] = &[
+//
+//     //Back Face
+//     Triangle::new(
+//         Vec3::new(0.4, 0.3, 0.8),
+//         Vec3::new(0.7, 0.3, 0.8),
+//         Vec3::new(0.7, 0.6, 0.8),
+//     ),
+//
+//     Triangle::new(
+//         Vec3::new(0.4, 0.3, 0.8),
+//         Vec3::new(0.7, 0.6, 0.8),
+//         Vec3::new(0.4, 0.6, 0.8),
+//     ),
+//
+//     //Bottom Face
+//     Triangle::new(
+//         Vec3::new(0.4, 0.6, 0.5),
+//         Vec3::new(0.4, 0.6, 0.8),
+//         Vec3::new(0.7, 0.6, 0.8),
+//     ),
+//
+//     Triangle::new(
+//         Vec3::new(0.7, 0.6, 0.8),
+//         Vec3::new(0.7, 0.6, 0.5),
+//         Vec3::new(0.4, 0.6, 0.5),
+//     ),
+//
+//     //Right Face
+//     Triangle::new(
+//         Vec3::new(0.7, 0.3, 0.8),
+//         Vec3::new(0.7, 0.6, 0.5),
+//         Vec3::new(0.7, 0.6, 0.8),
+//     ),
+//
+//     Triangle::new(
+//         Vec3::new(0.7, 0.3, 0.8),
+//         Vec3::new(0.7, 0.3, 0.5),
+//         Vec3::new(0.7, 0.6, 0.5),
+//     ),
+//
+//     //Left Face
+//     Triangle::new(
+//         Vec3::new(0.4, 0.6, 0.8),
+//         Vec3::new(0.4, 0.3, 0.8),
+//         Vec3::new(0.4, 0.6, 0.5),
+//     ),
+//
+//     Triangle::new(
+//         Vec3::new(0.4, 0.3, 0.8),
+//         Vec3::new(0.4, 0.3, 0.5),
+//         Vec3::new(0.4, 0.6, 0.5),
+//     ),
+//
+//     //Front Face
+//     Triangle::new(
+//         Vec3::new(0.4, 0.3, 0.5),
+//         Vec3::new(0.7, 0.3, 0.5),
+//         Vec3::new(0.7, 0.6, 0.5),
+//     ),
+//
+//     Triangle::new(
+//         Vec3::new(0.4, 0.3, 0.5),
+//         Vec3::new(0.7, 0.6, 0.5),
+//         Vec3::new(0.4, 0.6, 0.5),
+//     ),
+//     //Top Face
+//     Triangle::new(
+//         Vec3::new(0.4, 0.3, 0.5),
+//         Vec3::new(0.4, 0.3, 0.8),
+//         Vec3::new(0.7, 0.3, 0.8),
+//     ),
+//
+//     Triangle::new(
+//         Vec3::new(0.7, 0.3, 0.5),
+//         Vec3::new(0.4, 0.3, 0.5),
+//         Vec3::new(0.7, 0.3, 0.8),
+//     ),
+// ];
 
 static TRIG_COLOR: &[[u8; 3]] = &[
     [255, 0, 0],
@@ -122,6 +116,88 @@ static VIEWPORT: Viewport = Viewport {
 };
 
 fn main() {
+    let points_3d: &[Triangle] = &[
+        //Back Face
+        Triangle::new(
+            Vec3::new(0.4, 0.3, 0.8),
+            Vec3::new(0.7, 0.3, 0.8),
+            Vec3::new(0.7, 0.6, 0.8),
+        ),
+
+        Triangle::new(
+            Vec3::new(0.4, 0.3, 0.8),
+            Vec3::new(0.7, 0.6, 0.8),
+            Vec3::new(0.4, 0.6, 0.8),
+        ),
+
+        //Bottom Face
+        Triangle::new(
+            Vec3::new(0.4, 0.6, 0.5),
+            Vec3::new(0.4, 0.6, 0.8),
+            Vec3::new(0.7, 0.6, 0.8),
+        ),
+
+        Triangle::new(
+            Vec3::new(0.7, 0.6, 0.8),
+            Vec3::new(0.7, 0.6, 0.5),
+            Vec3::new(0.4, 0.6, 0.5),
+        ),
+
+        //Right Face
+        Triangle::new(
+            Vec3::new(0.7, 0.3, 0.8),
+            Vec3::new(0.7, 0.6, 0.5),
+            Vec3::new(0.7, 0.6, 0.8),
+        ),
+
+        Triangle::new(
+            Vec3::new(0.7, 0.3, 0.8),
+            Vec3::new(0.7, 0.3, 0.5),
+            Vec3::new(0.7, 0.6, 0.5),
+        ),
+
+        //Left Face
+        Triangle::new(
+            Vec3::new(0.4, 0.6, 0.8),
+            Vec3::new(0.4, 0.3, 0.8),
+            Vec3::new(0.4, 0.6, 0.5),
+        ),
+
+        Triangle::new(
+            Vec3::new(0.4, 0.3, 0.8),
+            Vec3::new(0.4, 0.3, 0.5),
+            Vec3::new(0.4, 0.6, 0.5),
+        ),
+
+        //Front Face
+        Triangle::new(
+            Vec3::new(0.4, 0.3, 0.5),
+            Vec3::new(0.7, 0.3, 0.5),
+            Vec3::new(0.7, 0.6, 0.5),
+        ),
+
+        Triangle::new(
+            Vec3::new(0.4, 0.3, 0.5),
+            Vec3::new(0.7, 0.6, 0.5),
+            Vec3::new(0.4, 0.6, 0.5),
+        ),
+        //Top Face
+        Triangle::new(
+            Vec3::new(0.4, 0.3, 0.5),
+            Vec3::new(0.4, 0.3, 0.8),
+            Vec3::new(0.7, 0.3, 0.8),
+        ),
+
+        Triangle::new(
+            Vec3::new(0.7, 0.3, 0.5),
+            Vec3::new(0.4, 0.3, 0.5),
+            Vec3::new(0.7, 0.3, 0.8),
+        ),
+    ];
+
+
+
+
     let mut frame: u64 = 0;
     let mut window = Window::new("window", 800, 600);
 
@@ -144,7 +220,7 @@ fn main() {
 
         framebuffer.clear(from_u8_rgb(217, 217, 217) / 4);
 
-        draw_object_3d(POINTS_3D, TRIG_COLOR, &VIEWPORT, &camera, framebuffer);
+        draw_object_3d(points_3d, TRIG_COLOR, &VIEWPORT, &camera, framebuffer);
 
         camera.y_rotation = 0f32 + ((frame / 20) as f32).sin() * 3f32;
 
