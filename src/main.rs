@@ -116,7 +116,7 @@ static VIEWPORT: Viewport = Viewport {
 };
 
 fn main() {
-    let points_3d: &[Triangle] = &[
+    let points_3d: &mut [Triangle] = &mut [
         //Back Face
         Triangle::new(
             Vec3::new(0.4, 0.3, 0.8),
@@ -195,7 +195,7 @@ fn main() {
         ),
     ];
 
-
+    points_3d.sort_by(|tri1, tri2| tri2.a.z.partial_cmp(&tri1.a.z).unwrap());
 
 
     let mut frame: u64 = 0;
@@ -222,7 +222,7 @@ fn main() {
 
         draw_object_3d(points_3d, TRIG_COLOR, &VIEWPORT, &camera, framebuffer);
 
-        camera.y_rotation = 0f32 + ((frame / 20) as f32).sin() * 3f32;
+        camera.y_rotation = (frame) as f32;
 
         window.display();
     }
