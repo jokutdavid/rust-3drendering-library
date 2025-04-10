@@ -1,6 +1,6 @@
 use glam::*;
 use std::f32::consts::PI;
-use crate::camera::Camera;
+use crate::camera::{Camera, Viewport};
 
 
 fn camera_transform(point: Vec3, camera: &Camera) -> Vec3 {
@@ -25,11 +25,11 @@ fn camera_transform(point: Vec3, camera: &Camera) -> Vec3 {
     )
 }
 
-pub fn project(point: Vec3, camera: &Camera) -> Vec2 {
+pub fn project(point: Vec3, viewport: &Viewport, camera: &Camera) -> Vec2 {
     let transformed_point = camera_transform(point, camera);
 
     Vec2::new(
-        transformed_point.x / transformed_point.z,
-        transformed_point.y / transformed_point.z
+        (viewport.z / transformed_point.z) * transformed_point.x + viewport.x,
+        (viewport.z / transformed_point.z) * transformed_point.y + viewport.y,
     )
 }

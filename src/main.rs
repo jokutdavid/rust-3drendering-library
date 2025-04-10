@@ -4,22 +4,100 @@ mod camera;
 mod draw;
 
 use glam::*;
-use crate::camera::Camera;
+use crate::camera::*;
 use crate::window::*;
 use crate::draw::*;
 static POINTS_3D: &[Vec3] = &[
-    Vec3::new(0.3, 0.3, 0.4),
-    Vec3::new(0.6, 0.3, 0.4),
-    Vec3::new(0.5, 0.4, 0.4),
+
+    //Back Face
+    Vec3::new(0.4, 0.3, 0.8),
+    Vec3::new(0.7, 0.3, 0.8),
+    Vec3::new(0.7, 0.6, 0.8),
+
+    Vec3::new(0.4, 0.3, 0.8),
+    Vec3::new(0.7, 0.6, 0.8),
+    Vec3::new(0.4, 0.6, 0.8),
+
+    //Bottom Face
+    Vec3::new(0.4, 0.6, 0.5),
+    Vec3::new(0.4, 0.6, 0.8),
+    Vec3::new(0.7, 0.6, 0.8),
+
+    Vec3::new(0.7, 0.6, 0.5),
+    Vec3::new(0.4, 0.6, 0.5),
+    Vec3::new(0.7, 0.6, 0.8),
+
+    //Right Face
+
+    Vec3::new(0.7, 0.3, 0.8),
+    Vec3::new(0.7, 0.6, 0.5),
+    Vec3::new(0.7, 0.6, 0.8),
+
+    Vec3::new(0.7, 0.3, 0.8),
+    Vec3::new(0.7, 0.3, 0.5),
+    Vec3::new(0.7, 0.6, 0.5),
+
+    //Left Face
+    Vec3::new(0.4, 0.3, 0.8),
+    Vec3::new(0.4, 0.6, 0.5),
+    Vec3::new(0.4, 0.6, 0.8),
+
+    Vec3::new(0.4, 0.3, 0.8),
+    Vec3::new(0.4, 0.3, 0.5),
+    Vec3::new(0.4, 0.6, 0.5),
+
+    //Front Face
+    Vec3::new(0.4, 0.3, 0.5),
+    Vec3::new(0.7, 0.3, 0.5),
+    Vec3::new(0.7, 0.6, 0.5),
+
+    Vec3::new(0.4, 0.3, 0.5),
+    Vec3::new(0.7, 0.6, 0.5),
+    Vec3::new(0.4, 0.6, 0.5),
+
+    //Top Face
+    Vec3::new(0.4, 0.3, 0.5),
+    Vec3::new(0.4, 0.3, 0.8),
+    Vec3::new(0.7, 0.3, 0.8),
+
+    Vec3::new(0.7, 0.3, 0.5),
+    Vec3::new(0.4, 0.3, 0.5),
+    Vec3::new(0.7, 0.3, 0.8),
 ];
+
+static TRIG_COLOR: &[[u8; 3]] = &[
+    [255, 0, 0],
+    [255, 0, 0],
+
+    [0, 255, 0],
+    [0, 255, 0],
+
+    [0, 0, 255],
+    [0, 0, 255],
+
+    [0, 255, 255],
+    [0, 255, 255],
+
+    [255, 255, 0],
+    [255, 255, 0],
+
+    [255, 0, 255],
+    [255, 0, 255],
+];
+
+static VIEWPORT: Viewport = Viewport {
+    x: 0.5,
+    y: 0.0,
+    z: 1.0
+};
 
 fn main() {
     let mut window = Window::new("window", 800, 600);
 
     let mut camera = Camera  {
-        x_position: 0.3,
-        y_position: 0.2,
-        z_position: 0.1,
+        x_position: 0.2,
+        y_position: 0.1,
+        z_position: -0.2,
 
         x_rotation: 0.0,
         y_rotation: 0.0,
@@ -32,9 +110,10 @@ fn main() {
 
         framebuffer.clear(from_u8_rgb(217, 217, 217) / 4);
 
-        draw_object_3d(POINTS_3D, &camera, framebuffer);
+        draw_object_3d(POINTS_3D, TRIG_COLOR, &VIEWPORT, &camera, framebuffer);
 
-        camera.z_rotation += 0.1;
+        camera.x_position += 0.002;
+        camera.y_rotation += 0.1;
 
         window.display();
     }

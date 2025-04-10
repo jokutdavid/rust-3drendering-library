@@ -1,5 +1,5 @@
 use glam::*;
-use crate::camera::Camera;
+use crate::camera::{Camera, Viewport};
 use crate::window::Framebuffer;
 use crate::projection::*;
 
@@ -45,27 +45,25 @@ pub fn draw_triangle(framebuffer: &mut Framebuffer, a: &Vec2, b: &Vec2, c: &Vec2
 
         }
     }
-    print!("1: {}, 2: {}, 3: {}", a, b, c);
-
 }
 
 
-pub fn draw_object_3d(points_3d: &[Vec3], camera: &Camera, framebuffer: &mut Framebuffer) {
+pub fn draw_object_3d(points_3d: &[Vec3], colors: &[[u8; 3]], viewport: &Viewport, camera: &Camera, framebuffer: &mut Framebuffer) {
     let mut points: Vec<Vec2> = vec![];
 
     for point in points_3d {
-        points.push(project(*point, camera));
+        points.push(project(*point, viewport, camera));
     }
 
     if points.len() % 3 == 0 { //Make sure that there are groups of three for triangles
         let mut i = 0;
+        let mut color: usize = 0;
 
         while i < points.len() {
-            draw_triangle(framebuffer, &points[i], &points[i + 1], &points[i + 2], from_u8_rgb(255, 0, 0));
+            draw_triangle(framebuffer, &points[i], &points[i + 1], &points[i + 2], from_u8_rgb(colors[color][0], colors[color][1], colors[color][2]));
 
             i += 3;
+            color += 1;
         }
-    } else {
-        print!("Amount of points in triangle not 3!");
     }
 }
