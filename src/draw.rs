@@ -58,9 +58,15 @@ pub fn draw_object_3d(points_3d: &[Vec3], colors: &[[u8; 3]], viewport: &Viewpor
     if points.len() % 3 == 0 { //Make sure that there are groups of three for triangles
         let mut color: usize = 0;
 
-        for i in 0..(points.len() / 3) {
-            draw_triangle(framebuffer, &points[i * 3], &points[i * 3 + 1], &points[i * 3+ 2], from_u8_rgb(colors[color][0], colors[color][1], colors[color][2]));
-            color += 1;
+        for i in points {
+            for j in i {
+                draw_triangle(framebuffer, j.a, j.b, j.c, from_u8_rgb(colors[color][0], colors[color][1], colors[color][2]))
+            }
         }
+
+        // for i in 0..(points.len() / 3) {
+        //     draw_triangle(framebuffer, &points[i * 3], &points[i * 3 + 1], &points[i * 3+ 2], from_u8_rgb(colors[color][0], colors[color][1], colors[color][2]));
+        //     color += 1;
+        // }
     }
 }
