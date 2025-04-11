@@ -12,7 +12,7 @@ use crate::object::*;
 
 static VIEWPORT: Viewport = Viewport {
     x: 0.5,
-    y: 0.0,
+    y: 0.5,
     z: 1.0
 };
 
@@ -20,15 +20,17 @@ fn main() {
     let mut cube: Object = Object {
         triangles: Box::new([
             Triangle::new(
-                Vec3::new(0.4, 0.3, 0.8),
+                Vec3::new(0.4, 0.3, 0.8,),
                 Vec3::new(0.7, 0.3, 0.8),
                 Vec3::new(0.7, 0.6, 0.8),
+                [255, 0, 0]
             ),
 
             Triangle::new(
                 Vec3::new(0.4, 0.3, 0.8),
                 Vec3::new(0.7, 0.6, 0.8),
                 Vec3::new(0.4, 0.6, 0.8),
+                [255, 0, 0]
             ),
 
             //Bottom Face
@@ -36,12 +38,14 @@ fn main() {
                 Vec3::new(0.4, 0.6, 0.5),
                 Vec3::new(0.4, 0.6, 0.8),
                 Vec3::new(0.7, 0.6, 0.8),
+                [0, 255, 0]
             ),
 
             Triangle::new(
                 Vec3::new(0.7, 0.6, 0.8),
                 Vec3::new(0.7, 0.6, 0.5),
                 Vec3::new(0.4, 0.6, 0.5),
+                [0, 255, 0]
             ),
 
             //Right Face
@@ -49,12 +53,14 @@ fn main() {
                 Vec3::new(0.7, 0.3, 0.8),
                 Vec3::new(0.7, 0.6, 0.5),
                 Vec3::new(0.7, 0.6, 0.8),
+                [0, 0, 255]
             ),
 
             Triangle::new(
                 Vec3::new(0.7, 0.3, 0.8),
                 Vec3::new(0.7, 0.3, 0.5),
                 Vec3::new(0.7, 0.6, 0.5),
+                [0, 0, 255]
             ),
 
             //Left Face
@@ -62,12 +68,14 @@ fn main() {
                 Vec3::new(0.4, 0.6, 0.8),
                 Vec3::new(0.4, 0.3, 0.8),
                 Vec3::new(0.4, 0.6, 0.5),
+                [255, 0, 255]
             ),
 
             Triangle::new(
                 Vec3::new(0.4, 0.3, 0.8),
                 Vec3::new(0.4, 0.3, 0.5),
                 Vec3::new(0.4, 0.6, 0.5),
+                [255, 0, 255]
             ),
 
             //Front Face
@@ -75,12 +83,14 @@ fn main() {
                 Vec3::new(0.4, 0.3, 0.5),
                 Vec3::new(0.7, 0.3, 0.5),
                 Vec3::new(0.7, 0.6, 0.5),
+                [255, 255, 0]
             ),
 
             Triangle::new(
                 Vec3::new(0.4, 0.3, 0.5),
                 Vec3::new(0.7, 0.6, 0.5),
                 Vec3::new(0.4, 0.6, 0.5),
+                [255, 255, 0]
             ),
 
             //Top Face
@@ -88,33 +98,15 @@ fn main() {
                 Vec3::new(0.4, 0.3, 0.5),
                 Vec3::new(0.4, 0.3, 0.8),
                 Vec3::new(0.7, 0.3, 0.8),
+                [0, 255, 255]
             ),
 
             Triangle::new(
                 Vec3::new(0.7, 0.3, 0.5),
                 Vec3::new(0.4, 0.3, 0.5),
                 Vec3::new(0.7, 0.3, 0.8),
+                [0, 255, 255]
             ),
-        ]),
-
-        colors: Box::new([
-            [255, 0, 0],
-            [255, 0, 0],
-
-            [0, 255, 0],
-            [0, 255, 0],
-
-            [0, 0, 255],
-            [0, 0, 255],
-
-            [0, 255, 255],
-            [0, 255, 255],
-
-            [255, 255, 0],
-            [255, 255, 0],
-
-            [255, 0, 255],
-            [255, 0, 255],
         ]),
 
         x_position: 0.0,
@@ -125,23 +117,24 @@ fn main() {
         z_rotation: 0.0,
     };
 
-    cube.triangles.sort_by(|tri1, tri2| tri2.a.z.partial_cmp(&tri1.a.z).unwrap());
 
     let mut frame: u64 = 0;
     let mut window = Window::new("window", 800, 600);
 
     let mut camera = Camera  {
-        x_position: 0.8f32,
-        y_position: -0.3,
+        x_position: 0.4f32,
+        y_position: 0.3,
         z_position: -0.2,
 
-        x_rotation: -12.0,
+        x_rotation: 0.0,
         y_rotation: 0.0,
         z_rotation: 0.0
     };
 
     let mut run = true;
     while !window.should_close() && run {
+        cube.triangles.sort_by(|tri1, tri2| tri2.a.z.partial_cmp(&tri1.a.z).unwrap());
+
         if frame < 18446744073709551615 { frame += 1; } else {run = false}
         if frame % 10 == 0 {println!("{}", frame);}
 
@@ -151,7 +144,9 @@ fn main() {
 
         draw_object_3d(&cube, &VIEWPORT, &camera, framebuffer);
 
-        camera.y_rotation = (frame as f32 / 30.0).sin() * 10.0;
+        camera.x_position -= 0.003;
+        camera.y_position += 0.003;
+
 
         window.display();
     }

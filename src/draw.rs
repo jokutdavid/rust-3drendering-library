@@ -51,21 +51,20 @@ pub fn draw_triangle(framebuffer: &mut Framebuffer, a: &Vec2, b: &Vec2, c: &Vec2
 
 pub fn draw_object_3d(object: &Object, viewport: &Viewport, camera: &Camera, framebuffer: &mut Framebuffer) {
     let mut points: Vec<Vec2> = vec![];
+    let mut colours: Vec<[u8; 3]> = vec![];
 
     for triangle in &object.triangles {
         points.push(project(triangle.a, viewport, camera));
         points.push(project(triangle.b, viewport, camera));
         points.push(project(triangle.c, viewport, camera));
+
+        colours.push(triangle.color);
     }
 
     if points.len() % 3 == 0 { //Make sure that there are groups of three for triangles
-        let mut color: usize = 0;
-
-
 
         for i in 0..(points.len() / 3) {
-            draw_triangle(framebuffer, &points[i * 3], &points[i * 3 + 1], &points[i * 3+ 2], from_u8_rgb(object.colors[color][0], object.colors[color][1], object.colors[color][2]));
-            color += 1;
+            draw_triangle(framebuffer, &points[i * 3], &points[i * 3 + 1], &points[i * 3+ 2], from_u8_rgb(colours[i][0], colours[i][1], colours[i][2]));
         }
     }
 }
