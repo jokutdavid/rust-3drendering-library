@@ -42,8 +42,6 @@ pub fn draw_triangle(framebuffer: &mut Framebuffer, a: &Vec2, b: &Vec2, c: &Vec2
             if inside_triangle(a, b, c, &p) {
                 framebuffer.set_pixel(x, y, color);
             }
-
-
         }
     }
 }
@@ -52,8 +50,19 @@ pub fn draw_triangle(framebuffer: &mut Framebuffer, a: &Vec2, b: &Vec2, c: &Vec2
 pub fn draw_object_3d(object: &Object, viewport: &Viewport, camera: &Camera, framebuffer: &mut Framebuffer) {
     let mut points: Vec<Vec2> = vec![];
     let mut colours: Vec<[u8; 3]> = vec![];
+    let mut triangles: Vec<Triangle3D> = vec![];
 
     for triangle in &object.triangles {
+        triangles.push(Triangle3D::new(
+            camera_transform(triangle.a, camera),
+            camera_transform(triangle.b, camera),
+            camera_transform(triangle.c, camera),
+
+            triangle.color
+        ));
+    }
+
+    for triangle in triangles {
         points.push(project(triangle.a, viewport, camera));
         points.push(project(triangle.b, viewport, camera));
         points.push(project(triangle.c, viewport, camera));
@@ -61,10 +70,7 @@ pub fn draw_object_3d(object: &Object, viewport: &Viewport, camera: &Camera, fra
         colours.push(triangle.color);
     }
 
-    if points.len() % 3 == 0 { //Make sure that there are groups of three for triangles
-
-        for i in 0..(points.len() / 3) {
-            draw_triangle(framebuffer, &points[i * 3], &points[i * 3 + 1], &points[i * 3+ 2], from_u8_rgb(colours[i][0], colours[i][1], colours[i][2]));
-        }
+    for i in 0..(points.len() / 3) {
+        draw_triangle(framebuffer, &points[i * 3], &points[i * 3 + 1], &points[i * 3+ 2], from_u8_rgb(colours[i][0], colours[i][1], colours[i][2]));
     }
 }

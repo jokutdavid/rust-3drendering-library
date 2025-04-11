@@ -19,14 +19,14 @@ static VIEWPORT: Viewport = Viewport {
 fn main() {
     let mut cube: Object = Object {
         triangles: Box::new([
-            Triangle::new(
+            Triangle3D::new(
                 Vec3::new(0.4, 0.3, 0.8,),
                 Vec3::new(0.7, 0.3, 0.8),
                 Vec3::new(0.7, 0.6, 0.8),
                 [255, 0, 0]
             ),
 
-            Triangle::new(
+            Triangle3D::new(
                 Vec3::new(0.4, 0.3, 0.8),
                 Vec3::new(0.7, 0.6, 0.8),
                 Vec3::new(0.4, 0.6, 0.8),
@@ -34,14 +34,14 @@ fn main() {
             ),
 
             //Bottom Face
-            Triangle::new(
+            Triangle3D::new(
                 Vec3::new(0.4, 0.6, 0.5),
                 Vec3::new(0.4, 0.6, 0.8),
                 Vec3::new(0.7, 0.6, 0.8),
                 [0, 255, 0]
             ),
 
-            Triangle::new(
+            Triangle3D::new(
                 Vec3::new(0.7, 0.6, 0.8),
                 Vec3::new(0.7, 0.6, 0.5),
                 Vec3::new(0.4, 0.6, 0.5),
@@ -49,14 +49,14 @@ fn main() {
             ),
 
             //Right Face
-            Triangle::new(
+            Triangle3D::new(
                 Vec3::new(0.7, 0.3, 0.8),
                 Vec3::new(0.7, 0.6, 0.5),
                 Vec3::new(0.7, 0.6, 0.8),
                 [0, 0, 255]
             ),
 
-            Triangle::new(
+            Triangle3D::new(
                 Vec3::new(0.7, 0.3, 0.8),
                 Vec3::new(0.7, 0.3, 0.5),
                 Vec3::new(0.7, 0.6, 0.5),
@@ -64,14 +64,14 @@ fn main() {
             ),
 
             //Left Face
-            Triangle::new(
+            Triangle3D::new(
                 Vec3::new(0.4, 0.6, 0.8),
                 Vec3::new(0.4, 0.3, 0.8),
                 Vec3::new(0.4, 0.6, 0.5),
                 [255, 0, 255]
             ),
 
-            Triangle::new(
+            Triangle3D::new(
                 Vec3::new(0.4, 0.3, 0.8),
                 Vec3::new(0.4, 0.3, 0.5),
                 Vec3::new(0.4, 0.6, 0.5),
@@ -79,14 +79,14 @@ fn main() {
             ),
 
             //Front Face
-            Triangle::new(
+            Triangle3D::new(
                 Vec3::new(0.4, 0.3, 0.5),
                 Vec3::new(0.7, 0.3, 0.5),
                 Vec3::new(0.7, 0.6, 0.5),
                 [255, 255, 0]
             ),
 
-            Triangle::new(
+            Triangle3D::new(
                 Vec3::new(0.4, 0.3, 0.5),
                 Vec3::new(0.7, 0.6, 0.5),
                 Vec3::new(0.4, 0.6, 0.5),
@@ -94,14 +94,14 @@ fn main() {
             ),
 
             //Top Face
-            Triangle::new(
+            Triangle3D::new(
                 Vec3::new(0.4, 0.3, 0.5),
                 Vec3::new(0.4, 0.3, 0.8),
                 Vec3::new(0.7, 0.3, 0.8),
                 [0, 255, 255]
             ),
 
-            Triangle::new(
+            Triangle3D::new(
                 Vec3::new(0.7, 0.3, 0.5),
                 Vec3::new(0.4, 0.3, 0.5),
                 Vec3::new(0.7, 0.3, 0.8),
@@ -133,8 +133,6 @@ fn main() {
 
     let mut run = true;
     while !window.should_close() && run {
-        cube.triangles.sort_by(|tri1, tri2| tri2.a.z.partial_cmp(&tri1.a.z).unwrap());
-
         if frame < 18446744073709551615 { frame += 1; } else {run = false}
         if frame % 10 == 0 {println!("{}", frame);}
 
@@ -146,7 +144,6 @@ fn main() {
 
         camera.x_position -= 0.003;
         camera.y_position += 0.003;
-
 
         window.display();
     }

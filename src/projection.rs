@@ -3,7 +3,7 @@ use std::f32::consts::PI;
 use crate::camera::{Camera, Viewport};
 
 
-fn camera_transform(point: Vec3, camera: &Camera) -> Vec3 {
+pub fn camera_transform(point: Vec3, camera: &Camera) -> Vec3 {
     let deg = PI / 180.0f32; //Don't want to deal with radians
 
     let x = point.x - camera.x_position;
@@ -26,10 +26,9 @@ fn camera_transform(point: Vec3, camera: &Camera) -> Vec3 {
 }
 
 pub fn project(point: Vec3, viewport: &Viewport, camera: &Camera) -> Vec2 {
-    let transformed_point = camera_transform(point, camera);
 
     Vec2::new(
-        (viewport.z / transformed_point.z) * transformed_point.x + viewport.x,
-        (viewport.z / transformed_point.z) * transformed_point.y + viewport.y,
+        (viewport.z / point.z) * point.x + viewport.x,
+        (viewport.z / point.z) * point.y + viewport.y,
     )
 }
